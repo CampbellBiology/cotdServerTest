@@ -3,6 +3,7 @@ package CocktailOfTheDay.project.Controller;
 
 import CocktailOfTheDay.project.DBConn.DBConn;
 import CocktailOfTheDay.project.model.ItemResponse;
+import CocktailOfTheDay.project.model.RecipeResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -248,7 +249,7 @@ public class LiquorItemController {
 
     //모든 재료 가져오기
     @RequestMapping("/api/getAllIngredient")
-    public ArrayList<ItemResponse> itemDelete() throws SQLException {
+    public ArrayList<ItemResponse> itemget() throws SQLException {
 
         //재료를 넣어서 반환할 ArrayList
         ArrayList<ItemResponse> resultList = new ArrayList<>();
@@ -284,6 +285,84 @@ public class LiquorItemController {
 
                 //ArrayList에 add하기
                 resultList.add(Cabinet);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e3) {
+                e3.printStackTrace();
+            }
+
+        }
+        return resultList;
+
+    }
+
+
+
+    //모든 레시피 가져오기
+    @RequestMapping("/api/getAllRecipe")
+    public ArrayList<RecipeResponse> getRecipe() throws SQLException {
+
+        //재료를 넣어서 반환할 ArrayList
+        ArrayList<RecipeResponse> resultList = new ArrayList<>();
+
+        //DBConn 초기회
+        DBConn DBconn;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+
+        try {
+
+            //DB 연결
+            DBconn = new DBConn();
+            conn = DBconn.connect();
+
+
+            //sql문 세팅
+            String sql = "select * from recipe;";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+
+            //재료 다 담기
+            while (rs.next()) {
+
+                //   ArrayList<RecipeResponse> resultList = new ArrayList<>();
+                //ArrayList에 담을 클래스 생성
+                RecipeResponse recipe = new RecipeResponse();
+
+                //클레스에 멤버 세팅
+                recipe.setRecipe_index(rs.getString(1));
+                recipe.setUser_id(rs.getString(2));
+                recipe.setCocktail_name(rs.getString(3));
+                recipe.setIngredient(rs.getString(4));
+                recipe.setAmount(rs.getString(5));
+                recipe.setMethod(rs.getString(6));
+                recipe.setTip(rs.getString(7));
+                recipe.setImg_path(rs.getString(8));
+                recipe.setRecipe_like(rs.getString(9));
+                recipe.setView_count(rs.getString(10));
+                recipe.setTime_stamp(rs.getString(11));
+
+                //ArrayList에 add하기
+                resultList.add(recipe);
 
             }
 
