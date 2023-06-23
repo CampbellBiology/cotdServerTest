@@ -11,8 +11,6 @@ public class RecipeResponse {
     String recipe_index;
     String user_id;
     String cocktail_name;
-    String ingredient;
-    String amount;
     String method;
     String tip;
     String img_path;

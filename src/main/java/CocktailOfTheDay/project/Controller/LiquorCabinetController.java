@@ -2,7 +2,8 @@ package CocktailOfTheDay.project.Controller;
 
 
 import CocktailOfTheDay.project.DBConn.DBConn;
-import CocktailOfTheDay.project.model.ItemResponse;
+import CocktailOfTheDay.project.model.IngredientResponse;
+import CocktailOfTheDay.project.model.RecipeIngredientResponse;
 import CocktailOfTheDay.project.model.RecipeResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,27 +13,28 @@ import java.util.HashMap;
 
 
 @RestController
-public class LiquorItemController {
+public class LiquorCabinetController {
 
     //아이템 리스트 만들 때
+    //내가 가진 술장 재료 목록임
     @RequestMapping("/api/item")
-    public ArrayList<ItemResponse> liquorItem(@RequestBody HashMap<String, Object> _userInfo) throws SQLException {
+    public ArrayList<IngredientResponse> liquorItem(@RequestBody HashMap<String, Object> _userInfo) throws SQLException {
 
         String user_id = _userInfo.get("user_id").toString();
         System.out.println("ItemResponse user_id : " + user_id);
 
 
         //결과로 반환할 ArrayList
-        ArrayList<ItemResponse> result;
+        ArrayList<IngredientResponse> result;
 
         //재료가 있을 때 재료를 넣어서 반환할 ArrayList
-        ArrayList<ItemResponse> resultList = new ArrayList<>();
+        ArrayList<IngredientResponse> resultList = new ArrayList<>();
 
         //디폴트 결과(재료가 없을 때 반환할 ArrayList)
-        ArrayList<ItemResponse> resultListD = new ArrayList<>();
+        ArrayList<IngredientResponse> resultListD = new ArrayList<>();
 
         //ArrayList 안에 담을 클래스
-        ItemResponse userCabinetD = new ItemResponse();
+        IngredientResponse userCabinetD = new IngredientResponse();
         //클래스 안에 멤버 세팅
         userCabinetD.setIngredient_name("재료가 없네요");
         userCabinetD.setImg_path("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Empty_set_symbol.svg/123px-Empty_set_symbol.svg.png");
@@ -72,7 +74,7 @@ public class LiquorItemController {
             //재료 여러 개 담기
             while (rs.next()) {
                 //ArrayList에 담을 클래스 생성
-                ItemResponse userCabinet = new ItemResponse();
+                IngredientResponse userCabinet = new IngredientResponse();
 
                 //클레스에 멤버 세팅
                 userCabinet.setIngredient_name(rs.getString(1));
@@ -116,7 +118,6 @@ public class LiquorItemController {
     //item 삭제할 때
     @RequestMapping("/api/itemDelete")
     public int itemDelete(@RequestBody HashMap<String, Object> _info) throws SQLException {
-
 
 
         System.out.println("ItemDelete user_id : " + _info.get("user_id"));
@@ -249,10 +250,10 @@ public class LiquorItemController {
 
     //모든 재료 가져오기
     @RequestMapping("/api/getAllIngredient")
-    public ArrayList<ItemResponse> itemget() throws SQLException {
+    public ArrayList<IngredientResponse> getAllIngredient() throws SQLException {
 
         //재료를 넣어서 반환할 ArrayList
-        ArrayList<ItemResponse> resultList = new ArrayList<>();
+        ArrayList<IngredientResponse> resultList = new ArrayList<>();
 
         //DBConn 초기회
         DBConn DBconn;
@@ -268,7 +269,7 @@ public class LiquorItemController {
 
 
             //sql문 세팅
-            String sql = "select ingredient_name, img_path from ingredient;";
+            String sql = "select * from ingredient;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -277,11 +278,14 @@ public class LiquorItemController {
             //재료 다 담기
             while (rs.next()) {
                 //ArrayList에 담을 클래스 생성
-                ItemResponse Cabinet = new ItemResponse();
+                IngredientResponse Cabinet = new IngredientResponse();
 
                 //클레스에 멤버 세팅
-                Cabinet.setIngredient_name(rs.getString(1));
-                Cabinet.setImg_path(rs.getString(2));
+                Cabinet.setIngredient_index(rs.getString(1));
+                Cabinet.setIngredient_category(rs.getString(2));
+                Cabinet.setIngredient_name(rs.getString(3));
+                Cabinet.setIngredient_like(rs.getString(4));
+                Cabinet.setImg_path(rs.getString(5));
 
                 //ArrayList에 add하기
                 resultList.add(Cabinet);
@@ -352,14 +356,12 @@ public class LiquorItemController {
                 recipe.setRecipe_index(rs.getString(1));
                 recipe.setUser_id(rs.getString(2));
                 recipe.setCocktail_name(rs.getString(3));
-                recipe.setIngredient(rs.getString(4));
-                recipe.setAmount(rs.getString(5));
-                recipe.setMethod(rs.getString(6));
-                recipe.setTip(rs.getString(7));
-                recipe.setImg_path(rs.getString(8));
-                recipe.setRecipe_like(rs.getString(9));
-                recipe.setView_count(rs.getString(10));
-                recipe.setTime_stamp(rs.getString(11));
+                recipe.setMethod(rs.getString(4));
+                recipe.setTip(rs.getString(5));
+                recipe.setImg_path(rs.getString(6));
+                recipe.setRecipe_like(rs.getString(7));
+                recipe.setView_count(rs.getString(8));
+                recipe.setTime_stamp(rs.getString(9));
 
                 //ArrayList에 add하기
                 resultList.add(recipe);
@@ -389,5 +391,78 @@ public class LiquorItemController {
         return resultList;
 
     }
+
+    //모든 레시피의 재료 가져오기
+    //모든 재료 가져오기
+    @RequestMapping("/api/getAllRecipeIngredient")
+    public ArrayList<RecipeIngredientResponse> getItem() throws SQLException {
+
+        //재료를 넣어서 반환할 ArrayList
+        ArrayList<RecipeIngredientResponse> resultList = new ArrayList<>();
+
+        //DBConn 초기회
+        DBConn DBconn;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+
+        try {
+
+            //DB 연결
+            DBconn = new DBConn();
+            conn = DBconn.connect();
+
+
+            //sql문 세팅
+            String sql = "select * from recipe_detail;";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+
+            //재료 다 담기
+            while (rs.next()) {
+                //ArrayList에 담을 클래스 생성
+                RecipeIngredientResponse recIng = new RecipeIngredientResponse();
+
+                //클레스에 멤버 세팅
+                recIng.setDetail_index(rs.getString(1));
+                recIng.setRecipe_index(rs.getString(2));
+                recIng.setIngredient_name(rs.getString(3));
+                recIng.setIngredient_amount(rs.getString(4));
+                recIng.setIngredient_type(rs.getString(5));
+
+                //ArrayList에 add하기
+                resultList.add(recIng);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e3) {
+                e3.printStackTrace();
+            }
+
+        }
+        return resultList;
+
+    }
+
+
+
+
 
 }
