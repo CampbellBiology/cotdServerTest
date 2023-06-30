@@ -358,10 +358,11 @@ public class LiquorCabinetController {
                 recipe.setCocktail_name(rs.getString(3));
                 recipe.setMethod(rs.getString(4));
                 recipe.setTip(rs.getString(5));
-                recipe.setImg_path(rs.getString(6));
-                recipe.setRecipe_like(rs.getString(7));
-                recipe.setView_count(rs.getString(8));
-                recipe.setTime_stamp(rs.getString(9));
+                recipe.setIsIBA(rs.getString(6));
+                recipe.setImg_path(rs.getString(7));
+                recipe.setRecipe_like(rs.getString(8));
+                recipe.setView_count(rs.getString(9));
+                recipe.setTime_stamp(rs.getString(10));
 
                 //ArrayList에 add하기
                 resultList.add(recipe);

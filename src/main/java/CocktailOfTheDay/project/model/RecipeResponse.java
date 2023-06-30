@@ -13,6 +13,7 @@ public class RecipeResponse {
     String cocktail_name;
     String method;
     String tip;
+    String isIBA;
     String img_path;
     String recipe_like;
     String view_count;
