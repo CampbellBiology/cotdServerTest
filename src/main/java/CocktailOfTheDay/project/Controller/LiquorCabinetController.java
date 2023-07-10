@@ -25,25 +25,25 @@ public class LiquorCabinetController {
 
 
         //결과로 반환할 ArrayList
-        ArrayList<IngredientResponse> result;
+//        ArrayList<IngredientResponse> result;
 
         //재료가 있을 때 재료를 넣어서 반환할 ArrayList
         ArrayList<IngredientResponse> resultList = new ArrayList<>();
 
         //디폴트 결과(재료가 없을 때 반환할 ArrayList)
-        ArrayList<IngredientResponse> resultListD = new ArrayList<>();
+//        ArrayList<IngredientResponse> resultListD = new ArrayList<>();
 
         //ArrayList 안에 담을 클래스
-        IngredientResponse userCabinetD = new IngredientResponse();
+//        IngredientResponse userCabinetD = new IngredientResponse();
         //클래스 안에 멤버 세팅
-        userCabinetD.setIngredient_name("재료가 없네요");
-        userCabinetD.setImg_path("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Empty_set_symbol.svg/123px-Empty_set_symbol.svg.png");
-        //클래스를 ArrayList에 추가
-        resultListD.add(userCabinetD);
-        //결과 확인해보기
-        System.out.println("resultListD : " + resultListD.get(0).getIngredient_name());
-        //디폴트값 세팅
-        result = resultListD;
+//        userCabinetD.setIngredient_name("재료가 없네요");
+//        userCabinetD.setImg_path("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Empty_set_symbol.svg/123px-Empty_set_symbol.svg.png");
+//        //클래스를 ArrayList에 추가
+//        resultListD.add(userCabinetD);
+//        //결과 확인해보기
+//        System.out.println("resultListD : " + resultListD.get(0).getIngredient_name());
+//        //디폴트값 세팅
+//        result = resultListD;
 
 
         //DBConn 초기회
@@ -85,7 +85,7 @@ public class LiquorCabinetController {
 
                 //결과로 재료 리스트 반환하기
                 //result가 덮어쓰임
-                result = resultList;
+                //result = resultList;
 
             }
 
@@ -110,7 +110,7 @@ public class LiquorCabinetController {
 
         }
 
-        return result;
+        return resultList;
     }
 
 
@@ -359,10 +359,11 @@ public class LiquorCabinetController {
                 recipe.setMethod(rs.getString(4));
                 recipe.setTip(rs.getString(5));
                 recipe.setIsIBA(rs.getString(6));
-                recipe.setImg_path(rs.getString(7));
-                recipe.setRecipe_like(rs.getString(8));
-                recipe.setView_count(rs.getString(9));
-                recipe.setTime_stamp(rs.getString(10));
+                recipe.setIsTest(rs.getString(7));
+                recipe.setImg_path(rs.getString(8));
+                recipe.setRecipe_like(rs.getString(9));
+                recipe.setView_count(rs.getString(10));
+                recipe.setTime_stamp(rs.getString(11));
 
                 //ArrayList에 add하기
                 resultList.add(recipe);
@@ -415,7 +416,7 @@ public class LiquorCabinetController {
 
 
             //sql문 세팅
-            String sql = "select * from recipe_detail;";
+            String sql = "select a.detail_index, a.recipe_index, b.cocktail_name, a.ingredient_name, a.ingredient_amount, a.ingredient_type from recipe_detail a left join recipe b on a.recipe_index = b.recipe_index;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -429,9 +430,10 @@ public class LiquorCabinetController {
                 //클레스에 멤버 세팅
                 recIng.setDetail_index(rs.getString(1));
                 recIng.setRecipe_index(rs.getString(2));
-                recIng.setIngredient_name(rs.getString(3));
-                recIng.setIngredient_amount(rs.getString(4));
-                recIng.setIngredient_type(rs.getString(5));
+                recIng.setCocktail_name(rs.getString(3));
+                recIng.setIngredient_name(rs.getString(4));
+                recIng.setIngredient_amount(rs.getString(5));
+                recIng.setIngredient_type(rs.getString(6));
 
                 //ArrayList에 add하기
                 resultList.add(recIng);

@@ -14,6 +14,7 @@ public class RecipeResponse {
     String method;
     String tip;
     String isIBA;
+    String isTest;
     String img_path;
     String recipe_like;
     String view_count;
