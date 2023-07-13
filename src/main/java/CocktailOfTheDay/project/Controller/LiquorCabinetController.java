@@ -416,7 +416,14 @@ public class LiquorCabinetController {
 
 
             //sql문 세팅
-            String sql = "select a.detail_index, a.recipe_index, b.cocktail_name, a.ingredient_name, a.ingredient_amount, a.ingredient_type from recipe_detail a left join recipe b on a.recipe_index = b.recipe_index;";
+//            select a.detail_index, a.recipe_index, b.cocktail_name, c.ingredient_category, a.ingredient_name, a.ingredient_amount, a.ingredient_type
+//            from recipe_detail a, recipe b, ingredient c
+//            where a.recipe_index = b.recipe_index
+//            and a.ingredient_name = c.ingredient_name;
+
+            String sql = "select a.detail_index, a.recipe_index, b.cocktail_name, c.ingredient_category, a.ingredient_name, a.ingredient_amount, a.ingredient_type " +
+                    "from recipe_detail a, recipe b, ingredient c " +
+                    "where a.recipe_index = b.recipe_index and a.ingredient_name = c.ingredient_name;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -431,9 +438,10 @@ public class LiquorCabinetController {
                 recIng.setDetail_index(rs.getString(1));
                 recIng.setRecipe_index(rs.getString(2));
                 recIng.setCocktail_name(rs.getString(3));
-                recIng.setIngredient_name(rs.getString(4));
-                recIng.setIngredient_amount(rs.getString(5));
-                recIng.setIngredient_type(rs.getString(6));
+                recIng.setIngredient_category(rs.getString(4));
+                recIng.setIngredient_name(rs.getString(5));
+                recIng.setIngredient_amount(rs.getString(6));
+                recIng.setIngredient_type(rs.getString(7));
 
                 //ArrayList에 add하기
                 resultList.add(recIng);
