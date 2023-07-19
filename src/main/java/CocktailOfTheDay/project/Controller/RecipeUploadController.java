@@ -47,7 +47,7 @@ public class RecipeUploadController {
                 retCode = 2;
             } else {
 
-                String filePath = UPLOAD_PATH+"/"+fileId+"."+fileExtension;
+                String filePath = "";
 
                 for (int i = 0; i < photos.length; i++) {
 
@@ -72,6 +72,8 @@ public class RecipeUploadController {
 
                     // 파일경로에 맞게 파일생성
                     file.transferTo(fileSave);
+
+                    filePath = UPLOAD_PATH+"/"+fileId+"."+fileExtension;
 
                     System.out.println("파일업로드 완료 : "+filePath);
 
@@ -98,7 +100,7 @@ public class RecipeUploadController {
 
                     for (int i = 0; i < memberArray.size(); i++) {
                         JSONObject jo = (JSONObject) memberArray.get(i);
-                        System.out.println("재료이름 : " + jo.get("ingredient_name")+" 용량 : " + jo.get("ingredient_amount")+" 단위 : " + jo.get("ingredient_type"));
+                        System.out.println("재료이름 : " + jo.get("ingredientName")+" 용량 : " + jo.get("ingredientAmount")+" 단위 : " + jo.get("ingredientType"));
                     }
 
                 } catch (Exception e) {
