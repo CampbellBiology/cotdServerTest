@@ -13,5 +13,6 @@ public class WikiResponse {
     String wiki_name;
     String wiki_like;
     String wiki_img_path;
+    String wiki_description;
 
 }

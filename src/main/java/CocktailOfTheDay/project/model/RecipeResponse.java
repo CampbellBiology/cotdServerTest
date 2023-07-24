@@ -19,4 +19,5 @@ public class RecipeResponse {
     String recipe_like;
     String view_count;
     String time_stamp;
+    String description;
 }

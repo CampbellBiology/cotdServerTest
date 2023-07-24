@@ -55,6 +55,7 @@ public class WikiController {
                 wiki.setWiki_name(rs.getString(3));
                 wiki.setWiki_like(rs.getString(4));
                 wiki.setWiki_img_path(rs.getString(5));
+                wiki.setWiki_description(rs.getString(6));
 
                 //ArrayList에 add하기
                 resultList.add(wiki);

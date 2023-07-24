@@ -14,11 +14,6 @@ import java.util.HashMap;
 @RestController
 public class UserJoinController {
 
-    /*
-
-        회원가입 모듈 - mintcho95 - 2023-07-18
-
-     */
 
     @PostMapping("/api/join")
     public String join(@RequestBody HashMap<String,Object> _userJoinInfo){

@@ -26,7 +26,7 @@ public class HistoryController {
         String img_path = _history.get("img_path").toString();
         System.out.println("historyAdd img_path : " + img_path);
 
-        String createdAt = _history.get("createdAt").toString();
+        String created_at = _history.get("createdAt").toString();
         System.out.println("historyAdd createdAt : " + img_path);
 
 
@@ -49,14 +49,14 @@ public class HistoryController {
             //sql문 세팅
             //INSERT INTO my_keep (user_id, ingredient_name) VALUES ('1', '토닉워터');
             // String sql = "insert chat (couple_index, email, sender, message, timestamp2) values (?,?,?,?,?);";
-            String sql = "insert into history (user_id, cocktail_name, img_path, createdAt) values (?,?,?,?);";
+            String sql = "insert into history (user_id, cocktail_name, img_path, created_at) values (?,?,?,?);";
 
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, user_id);
             pstmt.setString(2, cocktail_name);
             pstmt.setString(3, img_path);
-            pstmt.setString(4, createdAt);
+            pstmt.setString(4, created_at);
 
             pstmt.executeUpdate();
 
@@ -111,7 +111,7 @@ public class HistoryController {
 
 
             //sql문 세팅
-            String sql = "select * from history order by createdAt desc;";
+            String sql = "select * from history order by created_at desc;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -167,7 +167,7 @@ public class HistoryController {
         System.out.println("historyDelete createdAt : " + _info.get("createdAt").toString());
 
         String user_id = _info.get("user_id").toString();
-        String createdAt = _info.get("createdAt").toString();
+        String created_at = _info.get("createdAt").toString();
 
 
 
@@ -188,7 +188,7 @@ public class HistoryController {
 
 
             //sql문 세팅
-            String sql = "delete from history where createdAt = '" + createdAt + "' and user_id = '" + user_id + "';";
+            String sql = "delete from history where created_at = '" + created_at + "' and user_id = '" + user_id + "';";
 
 
             pstmt = conn.prepareStatement(sql);

@@ -18,5 +18,6 @@ public class RecipeModel {
     private String recipe_like; // 글업로드당시 안햇갈릴려고 : 기본값 0개
     private String view_count; // 조회수
     private String timestamp; // 작성시간
+    private String description; // 칵테일 설명
 
 }

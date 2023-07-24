@@ -339,7 +339,7 @@ public class LiquorCabinetController {
 
 
             //sql문 세팅
-            String sql = "select * from recipe;";
+            String sql = "select * from recipe order by time_stamp desc;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -364,6 +364,7 @@ public class LiquorCabinetController {
                 recipe.setRecipe_like(rs.getString(9));
                 recipe.setView_count(rs.getString(10));
                 recipe.setTime_stamp(rs.getString(11));
+                recipe.setDescription(rs.getString(12));
 
                 //ArrayList에 add하기
                 resultList.add(recipe);

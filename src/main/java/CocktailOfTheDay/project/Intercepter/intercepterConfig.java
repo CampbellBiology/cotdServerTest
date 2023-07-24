@@ -1,11 +1,13 @@
 package CocktailOfTheDay.project.Intercepter;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Configuration
 public class intercepterConfig implements WebMvcConfigurer{
 
     /*
@@ -20,6 +22,7 @@ public class intercepterConfig implements WebMvcConfigurer{
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> urls = new ArrayList<>();
         urls.add("/api/upload"); // 인터셉터 whitelist
+        urls.add("/api/getUserInfo");
 
         registry.addInterceptor(new intercepter()).addPathPatterns(urls); // whitelist url add
     }
