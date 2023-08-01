@@ -21,7 +21,7 @@ public class intercepterConfig implements WebMvcConfigurer{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> urls = new ArrayList<>();
-        urls.add("/api/upload"); // 인터셉터 whitelist
+        urls.add("/upload"); // 인터셉터 whitelist
         urls.add("/api/getUserInfo");
 
         registry.addInterceptor(new intercepter()).addPathPatterns(urls); // whitelist url add

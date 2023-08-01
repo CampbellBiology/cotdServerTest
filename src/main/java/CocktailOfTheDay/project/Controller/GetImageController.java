@@ -40,4 +40,27 @@ public class GetImageController {
         }
     }
 
+    @GetMapping("/ingimg/{id}")
+    public ResponseEntity<Resource> getIngImage (@PathVariable("id") String _filename) throws MalformedURLException {
+        System.out.println("입력하신 파일명 : "+_filename);
+        String uploadpath = "C:\\COTD\\ingredient\\";
+        Resource resource = new FileSystemResource(uploadpath+_filename);
+        //파일이 존재하지 않을경우
+        if(!resource.exists()){
+            return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+        }else{
+            HttpHeaders headers = new HttpHeaders();
+            Path filepath = null;
+
+            try {
+                filepath = Paths.get(uploadpath + _filename);
+                headers.add("Content-Type", Files.probeContentType(filepath));
+            }catch(Exception e){
+                System.out.println("파일 처리 에러");
+            }
+            ResponseEntity<Resource> ret = new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+            return ret;
+        }
+    }
+
 }

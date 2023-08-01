@@ -23,9 +23,7 @@ public class UserJoinController {
         u.setId((String)_userJoinInfo.get("user_id"));
         u.setPw(encPw((String)_userJoinInfo.get("user_pw")));
         u.setName((String)_userJoinInfo.get("user_name"));
-        u.setEmail((String)_userJoinInfo.get("user_email"));
         u.setBirthday((String)_userJoinInfo.get("user_birthday"));
-        u.setGender((String)_userJoinInfo.get("user_gender"));
         u.setPhone((String)_userJoinInfo.get("user_phone"));
 
         String ret = dbInsert(u);
@@ -61,9 +59,7 @@ public class UserJoinController {
         System.out.println("이름 : "+u.getId());
         System.out.println("비번 : "+u.getPw());
         System.out.println("이름 : "+u.getName());
-        System.out.println("이멜 : "+u.getEmail());
         System.out.println("생일 : "+u.getBirthday());
-        System.out.println("성별 : "+u.getGender());
         System.out.println("연락 : "+u.getPhone());
 
 
@@ -78,18 +74,16 @@ public class UserJoinController {
             DBconn = new DBConn();
             conn = DBconn.connect();
 
-            String sql = "insert into user_information (id,pw,name,email,birthday,gender,phone) "+
-                    "values (?,?,?,?,?,?,?);";
+            String sql = "insert into user_information (id,pw,name,birthday,phone) "+
+                    "values (?,?,?,?,?);";
 
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1,u.getId());
             pstmt.setString(2,u.getPw());
             pstmt.setString(3,u.getName());
-            pstmt.setString(4,u.getEmail());
-            pstmt.setString(5,u.getBirthday());
-            pstmt.setString(6,u.getGender());
-            pstmt.setString(7,u.getPhone());
+            pstmt.setString(4,u.getBirthday());
+            pstmt.setString(5,u.getPhone());
 
             pstmt.executeUpdate();
 

@@ -90,9 +90,12 @@ public class HistoryController {
 
 
 
-    //모든 history 가져오기
+    //유저 history 가져오기
     @RequestMapping("/api/getHistory")
-    public ArrayList<HistoryResponse> getHistory() throws SQLException {
+    public ArrayList<HistoryResponse> getHistory(@RequestBody HashMap<String, Object> _userInfo) throws SQLException {
+
+        String user_id = _userInfo.get("user_id").toString();
+        System.out.println("historyResponse user_id : " + user_id);
 
         //반환할 ArrayList
         ArrayList<HistoryResponse> resultList = new ArrayList<>();
@@ -111,7 +114,7 @@ public class HistoryController {
 
 
             //sql문 세팅
-            String sql = "select * from history order by created_at desc;";
+            String sql = "select * from history where user_id = '" + user_id + "' order by created_at desc;";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
